@@ -31,10 +31,21 @@ class TrueCaserDatasetReader(DatasetReader):
     def _read(self, file_path: str) -> Iterator[Instance]:
 
         with open(file_path) as f:
+            counter = 0
             for line in f:
                 # I want a sentence represented by a string.
+                #here im going to replace with : 
+                #tokenized_sent = " ".join(map(str, self._character_tokenizer.tokenize(line.strip())))
+                #why do we use the _ before the function character_tokenizer? and is self just the self instance
+                #of an allennlp class? https://github.com/allenai/allennlp/tree/master/allennlp/data/tokenizers
+                
+                #organize the data so that each file's first line has the character describing the language the file is in? 
+                #if counter == 0: 
+                    #lang = line.strip()
                 tokenized_sent = " ".join(map(str, self._word_splitter.split_words(line.strip())))
                 chars = [Token(c) for c in tokenized_sent.lower()]
+                #this line would be replaced with:
+                #lang_labels = [lang for char in tokenized_sent]
                 case_labels = ["U" if char.isupper() else "L" for char in tokenized_sent]
                 if len(chars) != len(case_labels):
                     print("Mismatching sentence lengths!", tokenized_sent)
