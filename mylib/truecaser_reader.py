@@ -22,6 +22,7 @@ class TrueCaserDatasetReader(DatasetReader):
         fields = {"tokens": token_field}
 
         if tags:
+            #what does SequenceLabelField vs LabelField mean again? Is it cos there are multiple tags?
             label_field = SequenceLabelField(labels=tags, sequence_field=token_field)
             fields["tags"] = label_field
 
